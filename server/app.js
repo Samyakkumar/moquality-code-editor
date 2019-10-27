@@ -26,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use('/', indexRouter);
 app.use('/api/sendEditorData', sendEditorData);
 app.use('/api/getUserId', getUserId)
+console.log('Express started. Listening on port', process.env.PORT || 5000);
+app.listen(process.env.PORT || 5000);
 
 // Render React page
 app.use(express.static(path.join(__dirname, "../client/build/")));
