@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useCookies} from 'react-cookie';
-import {Button} from 'semantic-ui-react';
+import {Button, Container, Segment, Header} from 'semantic-ui-react';
 
 function Home() {
     const [uuid, setUuid] = useState("null");
@@ -17,9 +17,15 @@ function Home() {
 
     return(
     <>
-    <Button positive onClick={clickHandler}>Click here to generate a new Link!</Button>
+    <Container>
+        <Header as="h2">Click the button to generate a new link!</Header>
+
+    <Segment.Group raised>
+    <Segment><Button positive onClick={clickHandler}>Click here to generate a new Link!</Button></Segment>
     {gotUrl &&
-    <a href={url}>Click here to go the the generate link!</a>}
+    <Segment><a href={url}>Click here to go the the generate link!</a></Segment>}
+    </Segment.Group>
+    </Container>
     </>
     )
 }

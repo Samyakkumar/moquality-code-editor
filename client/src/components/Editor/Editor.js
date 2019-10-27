@@ -2,8 +2,7 @@ import React, {useState, useEffect} from "react";
 import AceEditor from "react-ace";
 // import {Drop} from '../Drop/Drop';
 import "jquery"
-import {Dropdown} from 'semantic-ui-react'
-
+import {Dropdown, Container} from 'semantic-ui-react'
 import {useParams} from 'react-router-dom'
 
 import "ace-builds/src-noconflict/mode-java";
@@ -75,6 +74,7 @@ function Editor() {
 
         return(
             <>
+            <Container>
             <Dropdown 
         placeholder="Select Language"
         fluid
@@ -99,7 +99,9 @@ function Editor() {
             enableSnippets: false,
             showLineNumbers: true,
             tabSize: 2,
-            }}/>
+            }} />
+            </Container>
+            
             </>
         )
 }
