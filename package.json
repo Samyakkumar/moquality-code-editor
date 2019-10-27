@@ -1,0 +1,28 @@
+{
+  "name": "moquality-code-editor",
+  "description": "moquality-code-editor",
+  "version": "1.0.0",
+  "cacheDirectories": [
+    "client/node_modules",
+    "server/node_modules"
+  ],
+  "scripts": {
+    "start": "cd server/ && npm start",
+    "install-client": "npm install --prefix client",
+    "install-server": "npm install --prefix server",
+    "build-client": "cd client/ && npm build",
+    "postinstall": "npm run install-client && npm run install-server && npm run build-client",
+    "server": "nodemon ./bin/www",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "engines": {
+    "npm": "6.11.3",
+    "node": "v12.6.0"
+  },
+  "dependencies": {
+    "concurrently": "^5.0.0",
+    "dotenv-cli": "^3.0.0",
+    "nodemon": "^1.19.4"
+  }
+}
