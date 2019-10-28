@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
 import AceEditor from "react-ace";
+import 'brace/ext/language_tools';
+
 // import {Drop} from '../Drop/Drop';
 import "jquery"
 import {Dropdown, Container} from 'semantic-ui-react'
@@ -94,9 +96,9 @@ function Editor() {
             highlightActiveLine={true}
             value={value}
             setOptions={{
-            enableBasicAutocompletion: false,
-            enableLiveAutocompletion: false,
-            enableSnippets: false,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true,
             showLineNumbers: true,
             tabSize: 2,
             }} />
