@@ -59,6 +59,23 @@ function Editor() {
     function onDropChange(event, newVal) {
         console.log(newVal.value)
         setCurrLang(newVal.value);
+        var result = {
+            "id": id, 
+            "user": {
+                "currLang": newVal.value,
+                "infoTyped": value
+            }
+        }
+        var res = JSON.stringify(result)
+        console.log("res")
+        console.log(value);
+        if (value) {
+            fetch("/api/sendEditorData", {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: res
+            })
+        }
     }
     
 
