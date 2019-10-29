@@ -12,8 +12,9 @@ var sendEditorData = require('./routes/sendEditorData');
 var getUserId = require('./routes/getUserId');
 
 var app = express();
-
-
+var server = require('http').Server(app)
+var io = require('socket.io').listen(server)
+app.set("socketio", io);
 app.use(cors())
 
 app.use(logger('dev'));
@@ -27,14 +28,18 @@ app.use('/', indexRouter);
 app.use('/api/sendEditorData', sendEditorData);
 app.use('/api/getUserId', getUserId)
 console.log('Express started. Listening on port', process.env.PORT || 5000);
-app.listen(process.env.PORT || 5000);
-
+// app.listen(process.env.PORT || 5000);
+server.listen(process.env.PORT || 5000)
 // Render React page
 app.use(express.static(path.join(__dirname, "../client/build/")));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
+
+io.on('connection', () => {
+  console.log('a user is connected')
+})
 
 
 module.exports = app;

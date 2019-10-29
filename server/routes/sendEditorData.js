@@ -17,8 +17,10 @@ var root = db.ref();
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
+  var io = req.app.get("socketio");
+let socket_id = [];
+
   var body = req.body;
-  console.log(body)
   var tbr = {
     "user" : {
       "currLang": body.user.currLang,
@@ -30,6 +32,16 @@ router.post('/', function(req, res, next) {
     // If users/ada/rank has never been set, currentRank will be `null`.
     return tbr;
   });
+  io.on("connection", socket => {
+    socket_id.push(socket.id);
+    if (socket_id[0] == socket.id) {
+        io.removeAllListeners("connection");
+    }
+  
+    socket.on("editorTextChanged", msg => {
+        console.log("just got ", msg)
+    })
+  })
   res.send("Data sent");
 });
 

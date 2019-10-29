@@ -6,15 +6,16 @@ import 'brace/ext/language_tools';
 import "jquery"
 import {Dropdown, Container} from 'semantic-ui-react'
 import {useParams} from 'react-router-dom'
+import socketIOClient from "socket.io-client";
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 function Editor() { 
     const { id } = useParams();
-    console.log(id)
     const [value, setValue] = useState("null");
     // const [uuid, setUuid] = useState(paramUuid);
     const [currLang, setCurrLang] = useState("javascript")
+    const [socket] = useState(socketIOClient())
     const programmingOptions = [
         {key: "javascript", value: 'javascript', text: "JavaScript" },
         {key: "java", value: "java", text: "Java"},
@@ -44,8 +45,6 @@ function Editor() {
             }
         }
         var res = JSON.stringify(result)
-        console.log("res")
-        console.log(value);
         if (value) {
             fetch("/api/sendEditorData", {
                 method: "POST",
@@ -57,7 +56,6 @@ function Editor() {
 
     // onselectionchange
     function onDropChange(event, newVal) {
-        console.log(newVal.value)
         setCurrLang(newVal.value);
         var result = {
             "id": id, 
@@ -67,8 +65,6 @@ function Editor() {
             }
         }
         var res = JSON.stringify(result)
-        console.log("res")
-        console.log(value);
         if (value) {
             fetch("/api/sendEditorData", {
                 method: "POST",
@@ -80,15 +76,15 @@ function Editor() {
     
 
     useEffect(() => {
-        fetch("/api/sendEditorData/userOnce/" + id, {
-            method: "GET"
-        }).then(res => res.json().then(dat => dat).then(final => setValue(final.user.infoTyped)))
+        // fetch("/api/sendEditorData/userOnce/" + id, {
+        //     method: "GET"
+        // }).then(res => res.json().then(dat => dat).then(final => setValue(final.user.infoTyped)))
 
-        setInterval(() => {
-            fetch("/api/sendEditorData/user/" + id, {
-                method: "GET"
-            }).then(res => res.json().then(dat => dat).then(final => setValue(final.infoTyped)))
-        }, 1000)
+        // setInterval(() => {
+        //     fetch("/api/sendEditorData/user/" + id, {
+        //         method: "GET"
+        //     }).then(res => res.json().then(dat => dat).then(final => setValue(final.infoTyped)))
+        // }, 1000)
     })
 
         return(

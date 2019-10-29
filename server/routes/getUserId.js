@@ -15,6 +15,9 @@ var root = db.ref();
 
 var gen = []
 router.get("/", function(req, res, next){
+    var io = req.app.get("socketio");
+    let socket_id = [];
+    
     var uData = {
         "user": {
             "currLang" : "javascript",
@@ -23,6 +26,14 @@ router.get("/", function(req, res, next){
     }
     var newDataRef = root.push(uData);
     var id = newDataRef.toString().split("/")[3]
+    io.on("connection", socket => {
+        console.log("connection recieved")
+        socket_id.push(socket.id);
+        if (socket_id[0] == socket.id) {
+            io.removeAllListeners("connection");
+        }
+        socket.emit("gotUid", id);
+    })
     res.cookie("userId", id).send(id)
 })
 
