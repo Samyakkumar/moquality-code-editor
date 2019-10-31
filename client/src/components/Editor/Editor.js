@@ -14,10 +14,12 @@ const socket = socketIOClient("/editorDataSocket")
 
 function Editor() { 
     const { id } = useParams();
+    const { useDb } = useParams();
     const [value, setValue] = useState("null");
     // const [uuid, setUuid] = useState(paramUuid);
     const [currLang, setCurrLang] = useState("javascript")
-
+    const [useSocket, setUseSocket] = useState(false)
+    
     const programmingOptions = [
         {key: "javascript", value: 'javascript', text: "JavaScript" },
         {key: "java", value: "java", text: "Java"},
@@ -49,13 +51,14 @@ function Editor() {
             }
         }
         var res = JSON.stringify(result)
-        socket.emit("changeEditor", res)
-        if (value) {
+        if (value && useDb == 'true') {
             fetch("/api/sendEditorData", {
                 method: "POST",
                 headers: {"Content-type": "application/json"},
                 body: res
             })
+        } else {
+            socket.emit("changeEditor", res)
         }
     }
 
@@ -72,27 +75,36 @@ function Editor() {
             }
         }
         var res = JSON.stringify(result)
-        socket.emit("changeEditor", res)
-        // if (value) {
-        //     fetch("/api/sendEditorData", {
-        //         method: "POST",
-        //         headers: {"Content-type": "application/json"},
-        //         body: res
-        //     })
-        // }
+        
+        if (value && useDb == 'true') {
+            fetch("/api/sendEditorData", {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: res
+            })
+        } else {
+            socket.emit("changeEditor", res)
+        }
     }
     
 
     useEffect(() => {
-        fetch("/api/sendEditorData/userOnce/" + id, {
-            method: "GET"
-        }).then(res => res.json().then(dat => dat).then(final => setValue(final.user.infoTyped)))
-
-        setInterval(() => {
-            fetch("/api/sendEditorData/user/" + id, {
+        if (useDb == 'true') {
+            fetch("/api/sendEditorData/userOnce/" + id, {
                 method: "GET"
-            }).then(res => res.json().then(dat => dat).then(final => setValue(final.infoTyped)))
-        }, 1000)
+            }).then(res => res.json().then(dat => dat).then(final => setValue(final.user.infoTyped)))
+    
+            setInterval(() => {
+                fetch("/api/sendEditorData/user/" + id, {
+                    method: "GET"
+                }).then(res => res.json().then(dat => dat).then(final => setValue(final.infoTyped)))
+            }, 1000)
+        } else {
+            setUseSocket(true);
+            socket.on("editorDataChanged", (data) => {
+                console.log(data)
+            })
+        }
     })
 
         return(

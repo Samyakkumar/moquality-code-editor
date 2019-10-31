@@ -4,38 +4,17 @@ var router = express.Router();
 var admin = require("firebase-admin");
 
 var admin = require("firebase-admin");
-var serviceAccount = require("./moquality-code-internship-98b8df359a65.json");
+var serviceAccount = require("./moquality-code-internship-firebase-adminsdk-cczta-f5ddad25df.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://moquality-code-internship.firebaseio.com"
 });
-
 
 var db = admin.database();
 var root = db.ref();
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  var editorSocket = req.app.get("editorDataSocket");
-let socket_id = [];
-editorSocket.on("connection", (socket) => {
-  console.log("someone connected")
-})
-
-editorSocket.on("changeEditor", dat => {
-  console.log("got ", dat)
-})
-editorSocket.on("connection", socket => {
-  socket_id.push(socket.id);
-  if (socket_id[0] == socket.id) {
-      io.removeAllListeners("connection");
-  }
-  socket.on("changeEditor", msg => {
-    console.log("just got ", msg)
-  })
-})
-
-
   var body = req.body;
   var tbr = {
     "user" : {

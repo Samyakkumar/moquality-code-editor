@@ -19,7 +19,7 @@ function App() {
             <Home />
           </Route>
 
-          <Route path="/editor/:id">
+          <Route path="/editor/:id/:useDb">
             <Editor />
           </Route>
  
