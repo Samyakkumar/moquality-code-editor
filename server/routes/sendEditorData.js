@@ -17,7 +17,7 @@ var root = db.ref();
 /* GET users listing. */
 router.post('/', function(req, res, next) {
   var editorSocket = req.app.get("editorDataSocket");
-// let socket_id = [];
+let socket_id = [];
 editorSocket.on("connection", (socket) => {
   console.log("someone connected")
 })
