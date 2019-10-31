@@ -14,7 +14,7 @@ function Home() {
             method: "GET"
         }).then(dat => dat).then(res => res.text().then((data) => {
             var jsonData = JSON.parse(data)
-            setUrl("/editor/" + jsonData.id);
+            setUrl("/editor/" + jsonData.id + jsonData.useDb);
             setGotUrl(true)
         }))
     }
