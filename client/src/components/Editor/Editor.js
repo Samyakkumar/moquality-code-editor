@@ -10,12 +10,14 @@ import socketIOClient from "socket.io-client";
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
+const socket = socketIOClient()
+
 function Editor() { 
     const { id } = useParams();
     const [value, setValue] = useState("null");
     // const [uuid, setUuid] = useState(paramUuid);
     const [currLang, setCurrLang] = useState("javascript")
-    const [socket] = useState(socketIOClient())
+
     const programmingOptions = [
         {key: "javascript", value: 'javascript', text: "JavaScript" },
         {key: "java", value: "java", text: "Java"},
@@ -34,8 +36,10 @@ function Editor() {
         {key: "css", value: "css", text: "CSS"}
     ];
     const [languages] = useState(programmingOptions)
+    
     // const [onChange, setOnchange] = useState();
     function onChange(value, event) {
+
         console.log("called")
         var result = {
             "id": id, 
@@ -45,6 +49,7 @@ function Editor() {
             }
         }
         var res = JSON.stringify(result)
+        socket.emit("changeEditor", res)
         if (value) {
             fetch("/api/sendEditorData", {
                 method: "POST",
@@ -56,6 +61,8 @@ function Editor() {
 
     // onselectionchange
     function onDropChange(event, newVal) {
+        const socket = socketIOClient()
+
         setCurrLang(newVal.value);
         var result = {
             "id": id, 
@@ -65,13 +72,14 @@ function Editor() {
             }
         }
         var res = JSON.stringify(result)
-        if (value) {
-            fetch("/api/sendEditorData", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: res
-            })
-        }
+        socket.emit("changeEditor", res)
+        // if (value) {
+        //     fetch("/api/sendEditorData", {
+        //         method: "POST",
+        //         headers: {"Content-type": "application/json"},
+        //         body: res
+        //     })
+        // }
     }
     
 
