@@ -14,7 +14,9 @@ var getUserId = require('./routes/getUserId');
 var app = express();
 var server = require('http').Server(app)
 var io = require('socket.io').listen(server)
+const editorSocket = io.of("/editorDataSocket")
 app.set("socketio", io);
+app.set("editorDataSocket", editorSocket)
 app.use(cors())
 
 app.use(logger('dev'));

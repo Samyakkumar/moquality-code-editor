@@ -10,7 +10,7 @@ import socketIOClient from "socket.io-client";
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
-const socket = socketIOClient()
+const socket = socketIOClient("/editorDataSocket")
 
 function Editor() { 
     const { id } = useParams();
@@ -84,15 +84,15 @@ function Editor() {
     
 
     useEffect(() => {
-        // fetch("/api/sendEditorData/userOnce/" + id, {
-        //     method: "GET"
-        // }).then(res => res.json().then(dat => dat).then(final => setValue(final.user.infoTyped)))
+        fetch("/api/sendEditorData/userOnce/" + id, {
+            method: "GET"
+        }).then(res => res.json().then(dat => dat).then(final => setValue(final.user.infoTyped)))
 
-        // setInterval(() => {
-        //     fetch("/api/sendEditorData/user/" + id, {
-        //         method: "GET"
-        //     }).then(res => res.json().then(dat => dat).then(final => setValue(final.infoTyped)))
-        // }, 1000)
+        setInterval(() => {
+            fetch("/api/sendEditorData/user/" + id, {
+                method: "GET"
+            }).then(res => res.json().then(dat => dat).then(final => setValue(final.infoTyped)))
+        }, 1000)
     })
 
         return(

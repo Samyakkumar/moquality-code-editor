@@ -5,8 +5,6 @@ var admin = require("firebase-admin");
 
 var admin = require("firebase-admin");
 var serviceAccount = require("./moquality-code-internship-98b8df359a65.json");
-var io = require('socket.io');
-const editorSocket = io.of("/editor")
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://moquality-code-internship.firebaseio.com"
@@ -18,11 +16,11 @@ var root = db.ref();
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-//   var io = req.app.get("socketio");
-// // let socket_id = [];
-// editorSocket.on("connection", (socket) => {
-//   console.log("someone connected")
-// })
+  var editorSocket = req.app.get("editorDataSocket");
+// let socket_id = [];
+editorSocket.on("connection", (socket) => {
+  console.log("someone connected")
+})
 
 editorSocket.on("changeEditor", dat => {
   console.log("got ", dat)
