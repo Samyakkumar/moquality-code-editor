@@ -10,6 +10,7 @@ import socketIOClient from "socket.io-client";
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
+const socket = socketIOClient.connect("/editorDataSocket", {reconnect: true})
 
 function Editor() { 
     const { id } = useParams();
@@ -18,7 +19,6 @@ function Editor() {
     // const [uuid, setUuid] = useState(paramUuid);
     const [currLang, setCurrLang] = useState("javascript")
     const [useSocket, setUseSocket] = useState(false)
-    const socket = socketIOClient.connect("/editorDataSocket", {reconnect: true})
     
     const programmingOptions = [
         {key: "javascript", value: 'javascript', text: "JavaScript" },
@@ -59,10 +59,8 @@ function Editor() {
             })
         } else {
             console.log("here")
-            socket.on("connection", (sock) => {
-                console.log("Connected")
-                sock.emit("changeEditor", res)
-            })
+
+            socket.on("changeEditor", res)
         }
     }
 
@@ -85,10 +83,7 @@ function Editor() {
                 body: res
             })
         } else {
-            socket.on("connection", (sock) => {
-                console.log("Connected")
-                sock.emit("changeEditor", res)
-            })        
+            socket.emit("changeEditor", res)   
         }
     }
     
