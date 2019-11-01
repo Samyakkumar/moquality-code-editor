@@ -60,7 +60,7 @@ function Editor() {
         } else {
             console.log("here")
 
-            socket.on("changeEditor", res)
+            socket.emit("changeEditor", res)
         }
     }
 
