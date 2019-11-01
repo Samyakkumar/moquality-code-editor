@@ -67,8 +67,6 @@ function Editor() {
 
     // onselectionchange
     function onDropChange(event, newVal) {
-        const socket = socketIOClient()
-
         setCurrLang(newVal.value);
         var result = {
             "id": id, 
