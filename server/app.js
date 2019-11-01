@@ -23,7 +23,7 @@ editorSocket.on('connection', (sock) => {
   console.log("A new user has entered the room!")
   sock.on("changeEditor", (dat) => {
     console.log(dat)
-    sock.broadcast.to("editorDataSocket").emit("editorDataChanged", dat)
+    sock.broadcast.to("/editorDataSocket").emit("editorDataChanged", dat)
   })
 })
 
