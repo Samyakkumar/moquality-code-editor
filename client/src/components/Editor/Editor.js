@@ -10,7 +10,6 @@ import socketIOClient from "socket.io-client";
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
-const socket = socketIOClient("/editorDataSocket")
 
 function Editor() { 
     const { id } = useParams();
@@ -19,6 +18,7 @@ function Editor() {
     // const [uuid, setUuid] = useState(paramUuid);
     const [currLang, setCurrLang] = useState("javascript")
     const [useSocket, setUseSocket] = useState(false)
+    const socket = socketIOClient("/editorDataSocket")
     socket.on("connection", ()=>{
         console.log("Editor socket connected")
     })
