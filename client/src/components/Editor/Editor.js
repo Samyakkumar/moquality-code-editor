@@ -18,7 +18,7 @@ function Editor() {
     // const [uuid, setUuid] = useState(paramUuid);
     const [currLang, setCurrLang] = useState("javascript")
     const [useSocket, setUseSocket] = useState(false)
-    const socket = socketIOClient.connect("/editorDataSocket")
+    const socket = socketIOClient.connect()
     
     const programmingOptions = [
         {key: "javascript", value: 'javascript', text: "JavaScript" },
