@@ -14,7 +14,9 @@ var getUserId = require('./routes/getUserId');
 var app = express();
 var server = require('http').Server(app)
 var io = require('socket.io').listen(server)
-const editorSocket = io.of("/editorDataSocket")
+const editorSocket = io.of("/editorDataSocket").on("changeEditor", (dat) => {
+  console.log(dat)
+})
 
 app.use(cors())
 
@@ -46,9 +48,7 @@ editorSocket.on("connection", () => {
   console.log("A new user has entered the room!")
 })
 
-editorSocket.on("changeEditor", (dat) => {
-  console.log(dat)
-})
+
 
 
 module.exports = app;
