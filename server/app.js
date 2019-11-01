@@ -26,8 +26,10 @@ editorSocket.on('connection', (sock) => {
     console.log(dat)
     data = dat;
   })
+  console.log(data)
 
   sock.broadcast.emit("editorDataChanged", data)
+  sock.emit("editorDataChanged", data)
 })
 
 
