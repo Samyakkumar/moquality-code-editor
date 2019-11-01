@@ -44,8 +44,9 @@ io.on('connection', () => {
   console.log('a user is connected')
 })
 
-editorSocket.on("connection", () => {
+io.on("changeEditor", (dat) => {
   console.log("A new user has entered the room!")
+  console.log(dat)
 })
 
 
