@@ -24,13 +24,11 @@ editorSocket.on('connection', (sock) => {
   sock.on("changeEditor", (dat) => {
     console.log(dat)
     data = dat;
+    sock.emit("editorDataChanged", data)
   })
   console.log(data)
 })
 
-editorSocket.on("connection", (sock) => {
-  sock.emit("editorDataChanged",data)
-})
 
 
 app.use(cors())
