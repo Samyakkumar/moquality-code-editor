@@ -24,7 +24,7 @@ editorSocket.on('connection', (sock) => {
   sock.on("changeEditor", (dat) => {
     console.log(dat)
     data = dat;
-    sock.emit("editorDataChanged", data)
+    sock.broadcast.emit("editorDataChanged", data)
   })
   console.log(data)
 })
