@@ -18,18 +18,18 @@ console.log('Express started. Listening on port', process.env.PORT || 5000);
 server.listen(process.env.PORT || 5000)
 var io = require('socket.io').listen(server)
 var editorSocket = io.of("/editorDataSocket")
-
+var data = "";
 editorSocket.on('connection', (sock) => {
   console.log("A new user has entered the room!")
-  var data = "";
   sock.on("changeEditor", (dat) => {
     console.log(dat)
     data = dat;
   })
   console.log(data)
+})
 
-  sock.broadcast.emit("editorDataChanged", data)
-  sock.emit("editorDataChanged", data)
+editorSocket.on("connection", (sock) => {
+  sock.emit("editorDataChanged",data)
 })
 
 
