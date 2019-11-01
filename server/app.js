@@ -21,11 +21,13 @@ var editorSocket = io.of("/editorDataSocket")
 
 editorSocket.on('connection', (sock) => {
   console.log("A new user has entered the room!")
+  var data = "";
   sock.on("changeEditor", (dat) => {
     console.log(dat)
-    console.log("Broadcasting")
-    sock.broadcast.emit("editorDataChanged", dat)
+    data = dat;
   })
+
+  sock.broadcast.emit("editorDataChanged", data)
 })
 
 
