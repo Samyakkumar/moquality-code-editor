@@ -103,9 +103,10 @@ function Editor() {
             setUseSocket(true);
             socket.on("editorDataChanged", (data) => {
                 console.log("hererere")
-                console.log(data)
-                setValue(data.infoTyped)
-                setCurrLang(data.currLang)
+                console.log(data["infoTyped"])
+                console.log(data.infoTyped])
+                setValue(data.user.infoTyped)
+                setCurrLang(data.user.currLang)
             })
         }
     })
