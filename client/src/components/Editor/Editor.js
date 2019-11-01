@@ -59,7 +59,10 @@ function Editor() {
             })
         } else {
             console.log("here")
-            socket.emit("changeEditor", res)
+            socket.on("connect", (sock) => {
+                console.log("Connected")
+                sock.emit("changeEditor", res)
+            })
         }
     }
 
@@ -82,7 +85,10 @@ function Editor() {
                 body: res
             })
         } else {
-            socket.emit("changeEditor", res)
+            socket.on("connect", (sock) => {
+                console.log("Connected")
+                sock.emit("changeEditor", res)
+            })        
         }
     }
     
