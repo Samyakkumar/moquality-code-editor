@@ -7,9 +7,55 @@ import "jquery"
 import {Dropdown, Container} from 'semantic-ui-react'
 import {useParams} from 'react-router-dom'
 import socketIOClient from "socket.io-client";
+import "ace-builds/src-noconflict/ext-language_tools";
 
 import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/snippets/java";
+
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/snippets/python";
+
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/snippets/javascript";
+
+import "ace-builds/src-noconflict/mode-xml";
+import "ace-builds/src-noconflict/snippets/xml";
+
+import "ace-builds/src-noconflict/mode-json";
+import "ace-builds/src-noconflict/snippets/json";
+
+import "ace-builds/src-noconflict/mode-ruby";
+import "ace-builds/src-noconflict/snippets/ruby";
+
+import "ace-builds/src-noconflict/mode-sass";
+import "ace-builds/src-noconflict/snippets/sass";
+
+import "ace-builds/src-noconflict/mode-html";
+import "ace-builds/src-noconflict/snippets/html";
+
+import "ace-builds/src-noconflict/mode-csharp";
+import "ace-builds/src-noconflict/snippets/csharp";
+
+import "ace-builds/src-noconflict/mode-golang";
+import "ace-builds/src-noconflict/snippets/golang";
+
+import "ace-builds/src-noconflict/mode-elixir";
+import "ace-builds/src-noconflict/snippets/elixir";
+
+import "ace-builds/src-noconflict/mode-typescript";
+import "ace-builds/src-noconflict/snippets/typescript";
+
+import "ace-builds/src-noconflict/mode-css";
+import "ace-builds/src-noconflict/snippets/css";
+
+import "ace-builds/src-noconflict/mode-mysql";
+import "ace-builds/src-noconflict/snippets/mysql";
+
+
+
 import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-monokai";
+
 const socket = socketIOClient.connect("/editorDataSocket", {reconnect: true})
 
 function Editor() { 
@@ -25,7 +71,8 @@ function Editor() {
         {key: "java", value: "java", text: "Java"},
         {key: "python", value: "python", text: "Python"},
         {key: "xml", value: "xml", text: "XML"},
-        {key: "ruby", value:"ruby", text: "Ruby"}, {key: "sass", value: "sass", text: "SASS"},
+        {key: "ruby", value:"ruby", text: "Ruby"}, 
+        {key: "sass", value: "sass", text: "SASS"},
         {key: "markdown", value:"markdown", text: "Markdown"},
         {key: "mysql", value: "mysql", text: "mysql"},
         {key: "json", value: "json", text: "json"},
@@ -122,6 +169,7 @@ function Editor() {
         selection
         options={languages}
         onChange={onDropChange} />
+
         <AceEditor
             placeholder="Placeholder Text"
             mode={currLang}
@@ -133,13 +181,15 @@ function Editor() {
             showGutter={true}
             highlightActiveLine={true}
             value={value}
+            enableBasicAutocompletion={true}
+            enableLiveAutocompletion= {true}
             setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            enableSnippets: true,
-            showLineNumbers: true,
-            tabSize: 2,
-            }} />
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+                enableSnippets: true,
+                showLineNumbers: true,
+                tabSize: 4,
+                }}/>
             </Container>
             
             </>
