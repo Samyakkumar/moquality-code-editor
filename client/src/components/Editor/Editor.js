@@ -55,6 +55,7 @@ import "ace-builds/src-noconflict/snippets/mysql";
 
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-xcode";
 
 const socket = socketIOClient.connect("/editorDataSocket", {reconnect: true})
 
@@ -167,7 +168,7 @@ function Editor() {
         <AceEditor
             placeholder="Placeholder Text"
             mode={currLang}
-            theme="github"
+            theme="xcode"
             name="blah2"
             onChange={onChange}
             fontSize={14}
