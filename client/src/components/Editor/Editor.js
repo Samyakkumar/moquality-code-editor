@@ -173,7 +173,7 @@ function Editor() {
         <AceEditor
             placeholder="Placeholder Text"
             mode={currLang}
-            theme="monokai"
+            theme="github"
             name="blah2"
             onChange={onChange}
             fontSize={14}
@@ -183,6 +183,7 @@ function Editor() {
             value={value}
             enableBasicAutocompletion={true}
             enableLiveAutocompletion= {true}
+            width="100%"
             setOptions={{
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,
