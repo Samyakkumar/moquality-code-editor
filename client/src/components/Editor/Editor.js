@@ -89,7 +89,6 @@ function Editor() {
     // const [onChange, setOnchange] = useState();
     function onChange(value, event) {
 
-        console.log("called")
         var result = {
             "id": id, 
             "user": {
@@ -105,8 +104,6 @@ function Editor() {
                 body: res
             })
         } else {
-            console.log("here")
-
             socket.emit("changeEditor", res)
         }
     }
@@ -149,10 +146,7 @@ function Editor() {
         } else {
             setUseSocket(true);
             socket.on("editorDataChanged", (data) => {
-                console.log("hererere")
                 var datInJSON = JSON.parse(data);
-                console.log(datInJSON.user)
-                console.log(datInJSON)
                 setValue(datInJSON.user.infoTyped)
                 setCurrLang(datInJSON.user.currLang)
             })

@@ -39,7 +39,6 @@ router.get('/user/:id', function(req, res, next) {
       console.log("The read failed: " + errorObject.code)}
       );
   result.then(dat => {
-    console.log(JSON.stringify(dat))
     res.send(JSON.stringify(dat))
   })
   
