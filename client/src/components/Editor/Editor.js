@@ -74,6 +74,14 @@ function Editor() {
         {key: "javascript", value: 'javascript', text: "JavaScript" },
         {key: "java", value: "java", text: "Java"},
         {key: "python", value: "python", text: "Python"},
+        {key: "C", value: "c", text: "C"},
+        {key: "C++", value: "cpp", text: "C++"},
+        {key: "php", value: "php", text: "PHP"},
+        {key: "perl", value: "perl", text: "Perl"},
+        {key: "scala", value: "scala", text: "Scala"},
+        {key: "haskell", value: "haskell", text: "Haskell"},
+        {key: "Objective C", value: "objc", text: "Objective C"},
+        {key: "swift", value: "swift", text: "Swift"},
         {key: "xml", value: "xml", text: "XML"},
         {key: "ruby", value:"ruby", text: "Ruby"}, 
         {key: "sass", value: "sass", text: "SASS"},
@@ -86,16 +94,7 @@ function Editor() {
         {key: "csharp", value: "csharp", text: "CSharp"},
         {key: "elixir", value: "elixir", text: "Elixir"}, 
         {key: "typescript", value: "typescript", text: "TypeScript"},
-        {key: "css", value: "css", text: "CSS"},
-
-        {key: "C", value: "c", text: "C"},
-        {key: "C++", value: "cpp", text: "C++"},
-        {key: "php", value: "php", text: "PHP"},
-        {key: "perl", value: "perl", text: "Perl"},
-        {key: "scala", value: "scala", text: "Scala"},
-        {key: "haskell", value: "haskell", text: "Haskell"},
-        {key: "Objective C", value: "objc", text: "Objective C"},
-        {key: "swift", value: "swift", text: "Swift"}
+        {key: "css", value: "css", text: "CSS"}
         ];
     const [languages] = useState(programmingOptions)
     
