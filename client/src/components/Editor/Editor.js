@@ -56,6 +56,7 @@ import "ace-builds/src-noconflict/snippets/mysql";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-xcode";
+import "ace-builds/src-noconflict/theme-terminal";
 
 const socket = socketIOClient.connect("/editorDataSocket", {reconnect: true})
 
@@ -85,8 +86,17 @@ function Editor() {
         {key: "csharp", value: "csharp", text: "CSharp"},
         {key: "elixir", value: "elixir", text: "Elixir"}, 
         {key: "typescript", value: "typescript", text: "TypeScript"},
-        {key: "css", value: "css", text: "CSS"}
-    ];
+        {key: "css", value: "css", text: "CSS"},
+
+        {key: "C", value: "c", text: "C"},
+        {key: "C++", value: "cpp", text: "C++"},
+        {key: "php", value: "php", text: "PHP"},
+        {key: "perl", value: "perl", text: "Perl"},
+        {key: "scala", value: "scala", text: "Scala"},
+        {key: "haskell", value: "haskell", text: "Haskell"},
+        {key: "Objective C", value: "objc", text: "Objective C"},
+        {key: "swift", value: "swift", text: "Swift"}
+        ];
     const [languages] = useState(programmingOptions)
     
     // const [onChange, setOnchange] = useState();
@@ -139,6 +149,10 @@ function Editor() {
         if (currLang == "python") {
             languageTo = "python3"
         }
+
+        if (currLang == "javascript") {
+            languageTo = "nodejs"
+        }
         var toBeSent = JSON.stringify({
             "script": value,
             "language": languageTo
@@ -151,7 +165,7 @@ function Editor() {
             body: toBeSent
         }).then((res) => res.json().then((dat) => {
             setGotResult(true)
-            var stringToAdd = "Output = " + dat.output + "\n" + " Memory = " + dat.memory + " CPU Time = " + dat.cpuTime
+            var stringToAdd = "Output = " + dat.output + "`" + " Memory = " + dat.memory + "`" + " CPU Time = " + dat.cpuTime
             setResult(stringToAdd)
         }))
     }
@@ -215,7 +229,9 @@ function Editor() {
             {gotResult && <Message>
     <Message.Header>Result Of Execution</Message.Header>
     <p>
-     {result}
+     {result.split("`").map((i, key) => {
+         return <div key= {key}>{i}</div>
+     })}
     </p>
   </Message>}
             </>

@@ -30,7 +30,6 @@ router.post("/", (req, res, next) => {
         data: checkCreds
     }).then(((dat) => {
         if (dat.data.used < 200) {
-            console.log(dat)
             axios({
                 method: "POST",
                 url: executeDoodle,
