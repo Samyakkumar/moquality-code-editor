@@ -10,6 +10,7 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var sendEditorData = require('./routes/sendEditorData');
 var getUserId = require('./routes/getUserId');
+var executeCode = require('./routes/execute');
 
 var app = express();
 var server = require('http').Server(app)
@@ -41,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use('/', indexRouter);
 app.use('/api/sendEditorData', sendEditorData);
 app.use('/api/getUserId', getUserId)
+app.use('/api/execute', executeCode)
 
 // Render React page
 app.use(express.static(path.join(__dirname, "../client/build/")));

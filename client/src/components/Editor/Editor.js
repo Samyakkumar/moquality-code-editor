@@ -4,7 +4,7 @@ import 'brace/ext/language_tools';
 
 // import {Drop} from '../Drop/Drop';
 import "jquery"
-import {Dropdown, Container} from 'semantic-ui-react'
+import {Dropdown, Container, Message, Button} from 'semantic-ui-react'
 import {useParams} from 'react-router-dom'
 import socketIOClient from "socket.io-client";
 import "ace-builds/src-noconflict/ext-language_tools";
@@ -66,6 +66,8 @@ function Editor() {
     // const [uuid, setUuid] = useState(paramUuid);
     const [currLang, setCurrLang] = useState("javascript")
     const [useSocket, setUseSocket] = useState(false)
+    const [result, setResult] = useState("")
+    const [gotResult, setGotResult] = useState(false)
     
     const programmingOptions = [
         {key: "javascript", value: 'javascript', text: "JavaScript" },
@@ -89,7 +91,6 @@ function Editor() {
     
     // const [onChange, setOnchange] = useState();
     function onChange(value, event) {
-
         var result = {
             "id": id, 
             "user": {
@@ -98,6 +99,7 @@ function Editor() {
             }
         }
         var res = JSON.stringify(result)
+        setValue(value)
         if (value && useDb == 'true') {
             fetch("/api/sendEditorData", {
                 method: "POST",
@@ -120,7 +122,7 @@ function Editor() {
             }
         }
         var res = JSON.stringify(result)
-        
+        setCurrLang(newVal.value)
         if (value && useDb == 'true') {
             fetch("/api/sendEditorData", {
                 method: "POST",
@@ -132,6 +134,27 @@ function Editor() {
         }
     }
     
+    function clickHandler() {
+        var languageTo = currLang
+        if (currLang == "python") {
+            languageTo = "python3"
+        }
+        var toBeSent = JSON.stringify({
+            "script": value,
+            "language": languageTo
+        })
+        console.log(toBeSent)
+        console.log(languageTo)
+        fetch("/api/execute", {
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: toBeSent
+        }).then((res) => res.json().then((dat) => {
+            setGotResult(true)
+            var stringToAdd = "Output = " + dat.output + "\n" + " Memory = " + dat.memory + " CPU Time = " + dat.cpuTime
+            setResult(stringToAdd)
+        }))
+    }
 
     useEffect(() => {
         if (useDb == 'true') {
@@ -187,7 +210,13 @@ function Editor() {
                 tabSize: 4,
                 }}/>
             </Container>
-            
+            <Button positive onClick={clickHandler}>Click here to execute the code</Button>
+            {gotResult && <Message>
+    <Message.Header>Result Of Execution</Message.Header>
+    <p>
+     {result}
+    </p>
+  </Message>}
             </>
         )
 }
