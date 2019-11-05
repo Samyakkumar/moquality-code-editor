@@ -209,8 +209,9 @@ function Editor() {
                 showLineNumbers: true,
                 tabSize: 4,
                 }}/>
-            </Container>
             <Button positive onClick={clickHandler}>Click here to execute the code</Button>
+
+            </Container>
             {gotResult && <Message>
     <Message.Header>Result Of Execution</Message.Header>
     <p>
