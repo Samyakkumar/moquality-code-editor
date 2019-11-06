@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import AceEditor from "react-ace";
+import Terminal from 'terminal-in-react';
 import 'brace/ext/language_tools';
 
 // import {Drop} from '../Drop/Drop';
@@ -69,6 +70,9 @@ function Editor() {
     const [useSocket, setUseSocket] = useState(false)
     const [result, setResult] = useState("")
     const [gotResult, setGotResult] = useState(false)
+    const [execOutput, setExecOutput] = useState("")
+    const [execMemory, setExecMemory] = useState("")
+    const [execCpuTime, setExecCpuTime] = useState("")
     
     const programmingOptions = [
         {key: "javascript", value: 'javascript', text: "JavaScript" },
@@ -156,16 +160,19 @@ function Editor() {
             "script": value,
             "language": languageTo
         })
-        console.log(toBeSent)
-        console.log(languageTo)
         fetch("/api/execute", {
             method: "POST",
             headers: {"Content-type": "application/json"},
             body: toBeSent
         }).then((res) => res.json().then((dat) => {
             setGotResult(true)
-            var stringToAdd = "Output = " + dat.output + "`" + " Memory = " + dat.memory + "`" + " CPU Time = " + dat.cpuTime
-            setResult(stringToAdd)
+            setExecOutput(dat.output)
+            setExecMemory(dat.memory)
+            setExecCpuTime(dat.cpuTime)
+            // console.log(dat)
+            console.log(dat.output)
+            // console.log(dat.memory)
+            // console.log(dat.cpuTime)
         }))
     }
 
@@ -191,9 +198,10 @@ function Editor() {
     })
 
         return(
-            <>
-            <Container>
+            <div style={{backgroundColor: "#777777", height: "100%"}}>
+            <div style= {{width: "50%", height: "100%"}}>
             <Dropdown 
+            style={{backgroundColor: "black", color: "white"}}
         placeholder="Select Language"
         fluid
         search
@@ -202,9 +210,10 @@ function Editor() {
         onChange={onDropChange} />
 
         <AceEditor
+        style = {{width: "100%", marginTop: "20px"}}
             placeholder="Placeholder Text"
             mode={currLang}
-            theme="xcode"
+            theme="terminal"
             name="blah2"
             onChange={onChange}
             fontSize={14}
@@ -214,26 +223,22 @@ function Editor() {
             value={value}
             enableBasicAutocompletion={true}
             enableLiveAutocompletion= {true}
-            width="100%"
+            height="800px"
+            fontSize= "1.2em"
             setOptions={{
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,
                 enableSnippets: true,
                 showLineNumbers: true,
                 tabSize: 4,
-                }}/>
-            <Button positive onClick={clickHandler}>Click here to execute the code</Button>
+                }}/>             
+            </div>
 
-            </Container>
-            {gotResult && <Message>
-    <Message.Header>Result Of Execution</Message.Header>
-    <p>
-     {result.split("`").map((i, key) => {
-         return <div key= {key}>{i}</div>
-     })}
-    </p>
-  </Message>}
-            </>
+            <div style={{position: "absolute", left: "55%", top: "20px"}}>
+            <Terminal backgroundColor = "black" style = {{marginTop: "38px", marginLeft: "-75px", height: "800px", width: "750px", fontWeight: "bold", fontSize: "1.5em"}} watchConsoleLogging= {true} hideTopBar= {true} allowTabs={false}/>
+            <Button color='black' onClick={clickHandler}>Run</Button>
+            </div> 
+            </div>
         )
 }
 
