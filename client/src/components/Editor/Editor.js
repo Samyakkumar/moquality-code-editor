@@ -70,9 +70,7 @@ function Editor() {
     const [useSocket, setUseSocket] = useState(false)
     const [result, setResult] = useState("")
     const [gotResult, setGotResult] = useState(false)
-    const [execOutput, setExecOutput] = useState("")
-    const [execMemory, setExecMemory] = useState("")
-    const [execCpuTime, setExecCpuTime] = useState("")
+
     
     const programmingOptions = [
         {key: "javascript", value: 'javascript', text: "JavaScript" },
@@ -166,9 +164,9 @@ function Editor() {
             body: toBeSent
         }).then((res) => res.json().then((dat) => {
             setGotResult(true)
-            setExecOutput(dat.output)
-            setExecMemory(dat.memory)
-            setExecCpuTime(dat.cpuTime)
+            // setExecOutput(dat.output)
+            // setExecMemory(dat.memory)
+            // setExecCpuTime(dat.cpuTime)
             // console.log(dat)
             console.log(dat.output)
             // console.log(dat.memory)
